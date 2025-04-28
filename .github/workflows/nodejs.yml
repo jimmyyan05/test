@@ -1,20 +1,28 @@
 name: Node.js CI
 
+# on 什麼時候要啟動這個流程
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
+#jobs 表示：這個流程要做什麼
+# 這裡設定了一個叫 build 的工作（job）。
+# 這個 job 要在哪個作業系統上跑？
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      # 👉🏻 uses：使用一個現成的 GitHub 官方動作（這裡是 checkout，抓下你的程式碼）。
       - uses: actions/checkout@v4
+
+      # 👉🏻 setup-node：設定 Node.js 環境，讓 GitHub runner 裝 Node.js v20。
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
+      # 直接跑指令（像終端機指令一樣）。
       - run: npm install
       - run: npm test
